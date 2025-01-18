@@ -144,3 +144,20 @@ resource "aws_security_group" "default_sg" {
     Environment = var.env_prefix
   }
 }
+
+########################################
+# EC2 Instance
+resource "aws_instance" "ec2" {
+  count         = var.ec2_count
+  ami           = var.ec2_ami
+  instance_type = var.ec2_instance_type
+  subnet_id     = aws_subnet.private_subnet[0].id
+  key_name      = var.ec2_key_name
+  vpc_security_group_ids = [aws_security_group.default_sg.id]
+
+  tags = {
+    Name        = "${var.project_name}-${var.env_prefix}-ec2-instance-${count.index + 1}"
+    Project     = var.project_name
+    Environment = var.env_prefix
+  }
+}

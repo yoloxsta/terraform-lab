@@ -42,3 +42,18 @@ variable "public_subnet_for_nat" {
   type        = number
   default     = 0
 }
+variable "ami_id" {
+  description = "AMI ID for EC2 instance"
+  type        = string
+  default     = "ami-04b4f1a9cf54c11d0"
+}
+variable "key_name" {
+  type        = string
+  description = "EC2 key pair name"
+  default = "mykey1"
+}
+variable "instance_type" {
+  type        = string
+  description = "EC2 Instance Type"
+  default = "t2.micro"
+}

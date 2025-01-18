@@ -81,3 +81,24 @@ variable "sg_egress_rules" {
     }
   ]
 }
+
+variable "ec2_ami" {
+  description = "AMI ID for EC2 instance"
+  type        = string
+}
+
+variable "ec2_instance_type" {
+  description = "EC2 instance type"
+  type        = string
+}
+
+variable "ec2_count" {
+  description = "Number of EC2 instances"
+  type        = number
+  default     = 1
+}
+
+variable "ec2_key_name" {
+  description = "Name of the key pair for EC2 instances"
+  type        = string
+}
