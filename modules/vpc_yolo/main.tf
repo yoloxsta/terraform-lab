@@ -110,3 +110,37 @@ resource "aws_route_table_association" "private_rt_association" {
   subnet_id      = aws_subnet.private_subnet[count.index].id
   route_table_id = aws_route_table.private_rt[0].id
 }
+
+#############################################################################################
+# Security Group
+resource "aws_security_group" "default_sg" {
+  name        = "${var.project_name}-${var.env_prefix}-default-sg"
+  description = "Default security group for the VPC"
+  vpc_id      = aws_vpc.vpc[0].id
+
+  dynamic "ingress" {
+    for_each = var.sg_ingress_rules
+    content {
+      from_port   = ingress.value.from_port
+      to_port     = ingress.value.to_port
+      protocol    = ingress.value.protocol
+      cidr_blocks = ingress.value.cidr_blocks
+    }
+  }
+
+  dynamic "egress" {
+    for_each = var.sg_egress_rules
+    content {
+      from_port   = egress.value.from_port
+      to_port     = egress.value.to_port
+      protocol    = egress.value.protocol
+      cidr_blocks = egress.value.cidr_blocks
+    }
+  }
+
+  tags = {
+    Name        = "${var.project_name}-${var.env_prefix}-default-sg"
+    Project     = var.project_name
+    Environment = var.env_prefix
+  }
+}
