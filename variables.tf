@@ -50,10 +50,26 @@ variable "ami_id" {
 variable "key_name" {
   type        = string
   description = "EC2 key pair name"
-  default = "mykey1"
+  default = "mykey2"
 }
 variable "instance_type" {
   type        = string
   description = "EC2 Instance Type"
   default = "t2.micro"
 }
+
+#################
+
+variable "bucket_name" {
+  description = "Name of the S3 bucket"
+  type        = string
+  default = "soetintaung"
+}
+
+variable "tags" {
+  description = "Tags for the S3 bucket"
+  type        = map(string)
+  default     = {}
+}
+
+
