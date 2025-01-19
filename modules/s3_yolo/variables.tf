@@ -1,6 +1,10 @@
 variable "bucket_name" {
-  description = "The name of the S3 bucket"
-  type        = string
+  type = string
+}
+
+variable "acl" {
+  type = string
+  default = "private"
 }
 
 variable "tags" {
