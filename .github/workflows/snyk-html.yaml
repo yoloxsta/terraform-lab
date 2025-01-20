@@ -21,7 +21,7 @@ jobs:
     # Step 3: Run Snyk test and generate the JSON report
     - name: Run Snyk to check configuration files for security issues
       continue-on-error: true
-      run: snyk test --all-projects --sarif > snyk-report.json
+      run: snyk test > snyk-report.json
 
     # Step 4: Upload the JSON report as an artifact (optional, for reference)
     - name: Upload Snyk JSON report as an artifact
