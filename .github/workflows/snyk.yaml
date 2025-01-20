@@ -32,3 +32,7 @@ jobs:
         with:
           name: snyk-report
           path: snyk.sarif
+      - name: View SARIF report in HTML
+        uses: github/sarif-viewer-action@v1
+        with:
+          sarif_file: snyk.sarif
