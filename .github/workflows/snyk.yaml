@@ -27,6 +27,15 @@ jobs:
         run: ls -al snyk.sarif
       - name: Display SARIF File
         run: cat snyk.sarif
+      - name: Install SARIF to HTML tool
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y npm
+          npm install -g sarif2html
+
+      - name: Convert SARIF to HTML
+        run: |
+          sarif2html snyk.sarif > snyk.html
       - name: Upload SARIF File as an Artifact
         uses: actions/upload-artifact@v4
         with:
