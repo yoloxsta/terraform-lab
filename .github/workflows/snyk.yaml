@@ -28,7 +28,7 @@ jobs:
       - name: Display SARIF File
         run: cat snyk.sarif
       - name: Upload SARIF File as an Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: snyk-report
           path: snyk.sarif
