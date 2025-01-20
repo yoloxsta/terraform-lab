@@ -27,12 +27,6 @@ jobs:
         run: ls -al snyk.sarif
       - name: Display SARIF File
         run: cat snyk.sarif
-      - name: Convert SARIF to HTML
-        run: |
-          npm install -g @microsoft/sarif-multitool
-          mkdir -p report
-          sarif-multitool transform snyk.sarif --output report/snyk-report.html
-          
       - name: Upload SARIF File as an Artifact
         uses: actions/upload-artifact@v4
         with:
