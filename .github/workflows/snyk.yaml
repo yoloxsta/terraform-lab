@@ -30,10 +30,8 @@ jobs:
           # Add the path to the configuration file that you would like to test.
           # For example `deployment.yaml` for a Kubernetes deployment manifest
           # or `main.tf` for a Terraform configuration file
-          file: main.tf
-          output: 'trivy-results.sarif'
-      - name: Upload Trivy results as artifact
-        uses: actions/upload-artifact@v4
+          file: 
+      - name: Upload result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v3
         with:
-          name: trivy-results
-          path: trivy-results.sarif
+          sarif_file: snyk.sarif
