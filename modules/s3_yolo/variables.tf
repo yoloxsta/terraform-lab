@@ -1,14 +1,10 @@
 variable "bucket_name" {
-  type = string
-}
-
-variable "acl" {
-  type = string
-  default = "private"
+  description = "Name of the S3 bucket"
+  type        = string
 }
 
 variable "tags" {
-  description = "Tags for the S3 bucket"
+  description = "Tags to apply to the S3 bucket"
   type        = map(string)
   default     = {}
 }
