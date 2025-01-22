@@ -28,16 +28,15 @@ jobs:
         run: |
           checkov -d . --output json > checkov-results.json || cat checkov-results.json
 
-      - name: Generate HTML report from JSON
+      - name: Run Checkov scan with Markdown output
         run: |
-          python - <<EOF
-          import json
-          with open('checkov-results.json') as f:
-              results = json.load(f)
-          html_content = f"<html><body><h1>Checkov Report</h1><pre>{json.dumps(results, indent=2)}</pre></body></html>"
-          with open('checkov-report.html', 'w') as f:
-              f.write(html_content)
-          EOF
+          checkov -d . --output markdown > checkov-results.md
+
+      - name: Convert Markdown to HTML
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc
+          pandoc checkov-results.md -o checkov-report.html
 
 
       - name: Upload HTML report as artifact
