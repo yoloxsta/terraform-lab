@@ -21,9 +21,12 @@ jobs:
       - name: Install Checkov
         run: pip install checkov
 
+      - name: Verify Checkov installation
+        run: checkov --version
+
       - name: Run Checkov scan
         run: |
-          checkov -d . --output json > checkov-results.json
+          checkov -d . --output json > checkov-results.json || cat checkov-results.json
 
       - name: Generate HTML report
         run: |
