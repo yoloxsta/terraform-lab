@@ -17,7 +17,7 @@ jobs:
     # Set up Trivy
     - name: Download Trivy
       run: |
-        wget -qO- https://github.com/aquasecurity/trivy/releases/latest/download/trivy_$(uname -s)_$(uname -m).tar.gz | tar zxv
+        wget -qO- https://github.com/aquasecurity/trivy/releases/latest/download/trivy_1.9.2_Linux-64bit.tar.gz | tar -xzf - trivy_1.9.2/trivy
         sudo mv trivy /usr/local/bin/
 
     # Run Trivy IaC scan
