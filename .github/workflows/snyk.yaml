@@ -14,12 +14,13 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    # Download and Install Trivy (retry mechanism added)
+    # Download and Install Trivy (with verbose output)
     - name: Download Trivy
       run: |
         for i in {1..5}; do
-          wget -q https://github.com/aquasecurity/trivy/releases/download/v1.9.2/trivy_1.9.2_Linux-64bit.tar.gz && break || sleep 5;
+          wget https://github.com/aquasecurity/trivy/releases/download/v1.9.2/trivy_1.9.2_Linux-64bit.tar.gz -O trivy_1.9.2_Linux-64bit.tar.gz && break || sleep 5;
         done
+        ls -l
         tar -xzf trivy_1.9.2_Linux-64bit.tar.gz
         sudo mv trivy /usr/local/bin/
 
