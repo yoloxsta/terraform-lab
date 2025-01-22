@@ -28,20 +28,14 @@ jobs:
         run: |
           checkov -d . --output json > checkov-results.json || cat checkov-results.json
 
-      - name: Generate HTML report from JSON
-        run: |
-          python - <<EOF
-          import json
-          with open('checkov-results.json') as f:
-              results = json.load(f)
-          html_content = f"<html><body><h1>Checkov Report</h1><pre>{json.dumps(results, indent=2)}</pre></body></html>"
-          with open('checkov-report.html', 'w') as f:
-              f.write(html_content)
-          EOF
+      - name: Convert JSON to HTML Table
+        uses: Teebra/JSON-to-HTML-table@v2.0.0
+        with:
+          json-file: checkov-results.json  # Specify the path to your JSON file
 
 
       - name: Upload HTML report as artifact
         uses: actions/upload-artifact@v4
         with:
           name: checkov-iac-report
-          path: checkov-report.html
+          path: output.html
