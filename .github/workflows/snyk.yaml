@@ -14,11 +14,11 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    # Set up Trivy
+    # Download and Install Trivy (version 1.9.2)
     - name: Download Trivy
       run: |
         wget -qO- https://github.com/aquasecurity/trivy/releases/latest/download/trivy_1.9.2_Linux-64bit.tar.gz | tar -xzf - trivy_1.9.2/trivy
-        sudo mv trivy /usr/local/bin/
+        sudo mv trivy_1.9.2/trivy /usr/local/bin/trivy
 
     # Run Trivy IaC scan
     - name: Run IaC Scan
