@@ -1,35 +1,37 @@
-name: Snyk Infrastructure as Code
+name: trivy
 
 on:
   push:
     branches: [ "main" ]
-
 permissions:
   contents: read
 
 jobs:
-  snyk:
+  build:
     permissions:
-      contents: read 
-      security-events: write 
-      actions: read 
+      contents: read # for actions/checkout to fetch code
+      security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
+      actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
+    name: Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Run Snyk to check configuration files for security issues
-        continue-on-error: true
-        uses: snyk/actions/iac@14818c4695ecc4045f33c9cee9e795a788711ca4
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build an image from Dockerfile
+        run: |
+          docker build -t docker.io/my-organization/my-app:${{ github.sha }} .
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
         with:
-          file: ./
-      - name: Verify SARIF File
-        run: ls -al snyk.sarif
-      - name: Display SARIF File
-        run: cat snyk.sarif
+          image-ref: 'docker.io/my-organization/my-app:${{ github.sha }}'
+          format: 'template'
+          template: '@/contrib/html.tpl'
+          output: 'trivy-results.html'
+          severity: 'CRITICAL,HIGH'
       - name: Upload SARIF File as an Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: snyk-report
-          path: snyk.sarif
-      
+          name: trivy-results
+          path: trivy-results.html
