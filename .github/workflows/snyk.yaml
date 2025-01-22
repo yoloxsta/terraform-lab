@@ -1,4 +1,4 @@
-name: Trivy IaC Scan
+name: trivy
 
 on:
   push:
