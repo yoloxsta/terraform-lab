@@ -22,8 +22,8 @@ jobs:
         output: 'trivy-results.sarif'
         severity: 'CRITICAL'
     - name: Upload HTML report as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: checkov-iac-report
-          path: trivy-results.sarif
+      uses: actions/upload-artifact@v4
+      with:
+        name: checkov-iac-report
+        path: trivy-results.sarif
 
